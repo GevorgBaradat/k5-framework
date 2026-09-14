@@ -155,6 +155,8 @@ footer{
 }
 footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
 footer a:hover{color:var(--signal);border-color:var(--signal)}
+.cat a{color:var(--signal);text-decoration:none;border-bottom:1px solid var(--rule)}
+.cat a:hover{border-color:var(--signal)}
 
 /* ---------- entrance ---------- */
 @media (prefers-reduced-motion:no-preference){
@@ -183,7 +185,8 @@ footer a:hover{color:var(--signal);border-color:var(--signal)}
   </p>
 
   <div class="actions reveal" style="animation-delay:.22s">
-    <a class="btn" id="open-model" href="#">Open the XMI export <span class="arrow">&#8594;</span></a>
+    <a class="btn" id="open-model" href="#">Read the full write-up <span class="arrow">&#8594;</span></a>
+    <a class="btn-quiet" href="reading-direction/IT_Employment_v6_xmi_2_1.xml">Open the XMI export</a>
     <a class="btn-quiet" href="https://github.com/GevorgBaradat/k5-framework">Source and case files on GitHub</a>
   </div>
 
@@ -209,7 +212,7 @@ footer a:hover{color:var(--signal);border-color:var(--signal)}
     </div>
     <ol class="cats">
       <li class="cat"><code>01</code><span><b>XMI exports</b> &#8212; XMI 1.1 and 2.1, formatted and raw, straight out of Sparx</span></li>
-      <li class="cat"><code>02</code><span><b>Full write-up</b> &#8212; <span class="soon">publishing shortly</span></span></li>
+      <li class="cat"><code>02</code><span><b>Full write-up</b> &#8212; <a href="reading-direction/UML_Association_Reading_Direction_v0_7_FINAL.docx">Word document, with links to every diagram</a></span></li>
       <li class="cat"><code>03</code><span><b>Diagrams</b> &#8212; SVG and PNG, all six figures below</span></li>
     </ol>
   </section>
@@ -264,18 +267,18 @@ footer a:hover{color:var(--signal);border-color:var(--signal)}
    Path to the primary file for this case, relative to this file.
    Update this later to point at the article once it is published.
    ============================================================ */
-var MODEL_ENTRY = "reading-direction/IT_Employment_v6_xmi_2_1.xml";
+var MODEL_ENTRY = "reading-direction/UML_Association_Reading_Direction_v0_7_FINAL.docx";
 
 var link = document.getElementById("open-model");
 link.setAttribute("href", MODEL_ENTRY);
 
 link.addEventListener("click", function () {
-  /* Counts how many visitors actually opened the export,
+  /* Counts how many visitors actually opened the write-up,
      as opposed to landing here and leaving. */
   if (window.goatcounter && window.goatcounter.count) {
     window.goatcounter.count({
-      path: "opened-the-xmi",
-      title: "Opened the XMI export",
+      path: "opened-the-writeup",
+      title: "Opened the write-up",
       event: true
     });
   }
