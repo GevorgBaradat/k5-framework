@@ -1,0 +1,285 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Where a UML Association Loses Half Its Meaning</title>
+<meta name="description" content="A real Sparx Enterprise Architect XMI export showing the reading direction of a UML association name living in diagram geometry, not in the model. The first case in a short series on the K5 knowledge modelling framework.">
+
+<!-- Open Graph: controls how the link looks when pasted into LinkedIn -->
+<meta property="og:title" content="Where a UML Association Loses Half Its Meaning">
+<meta property="og:description" content="Same association, two diagrams, opposite claims about the world. A real XMI export, not a hand-written fixture. First case in the K5 knowledge modelling series.">
+<meta property="og:type" content="website">
+
+<!-- ============================================================
+     ANALYTICS. Same GoatCounter account as sparx-apqc, so this
+     case shows up as its own path in the same dashboard.
+     Delete these two lines to switch analytics off entirely.
+     ============================================================ -->
+<script data-goatcounter="https://sparx-apqc.goatcounter.com/count"
+        async src="//gc.zgo.at/count.js"></script>
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+
+<style>
+:root{
+  --paper:#EFEEE9;
+  --paper-lift:#F7F6F3;
+  --ink:#171A1D;
+  --ink-soft:#5A6169;
+  --rule:#D6D4CC;
+  --signal:#1F6F5C;
+  --signal-soft:#E2EFE9;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{-webkit-text-size-adjust:100%}
+body{
+  background:var(--paper);
+  color:var(--ink);
+  font-family:'Archivo',system-ui,-apple-system,sans-serif;
+  font-size:17px;
+  line-height:1.55;
+  -webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:56px 28px 80px}
+
+/* ---------- masthead ---------- */
+.eyebrow{
+  font-family:'JetBrains Mono',ui-monospace,monospace;
+  font-size:12px;letter-spacing:.14em;text-transform:uppercase;
+  color:var(--signal);display:flex;gap:14px;align-items:center;flex-wrap:wrap;
+}
+.eyebrow span{color:var(--ink-soft)}
+h1{
+  font-weight:700;
+  font-size:clamp(34px,6.4vw,58px);
+  line-height:1.04;
+  letter-spacing:-.025em;
+  margin:22px 0 0;
+  max-width:18ch;
+}
+h1 em{font-style:normal;color:var(--signal)}
+.lede{
+  margin-top:22px;max-width:62ch;font-size:clamp(17px,2.1vw,20px);
+  color:var(--ink-soft);
+}
+.lede strong{color:var(--ink);font-weight:600}
+
+/* ---------- call to action ---------- */
+.actions{margin-top:34px;display:flex;gap:14px;align-items:center;flex-wrap:wrap}
+.btn{
+  display:inline-flex;align-items:center;gap:12px;
+  background:var(--signal);color:#fff;text-decoration:none;
+  font-weight:600;font-size:17px;
+  padding:15px 26px;border-radius:2px;
+  transition:transform .16s ease,background .16s ease;
+}
+.btn:hover{background:#18574a;transform:translateY(-1px)}
+.btn:focus-visible{outline:3px solid var(--ink);outline-offset:3px}
+.btn .arrow{font-family:'JetBrains Mono',monospace;font-weight:400}
+.btn-quiet{
+  color:var(--ink);text-decoration:none;font-size:15px;
+  border-bottom:1px solid var(--rule);padding-bottom:2px;
+}
+.btn-quiet:hover{border-color:var(--signal);color:var(--signal)}
+
+/* ---------- facts ---------- */
+.facts{
+  margin-top:56px;display:grid;gap:1px;background:var(--rule);
+  grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+  border:1px solid var(--rule);
+}
+.fact{background:var(--paper-lift);padding:22px 22px 24px}
+.fact dt{
+  font-family:'JetBrains Mono',monospace;font-size:11px;letter-spacing:.13em;
+  text-transform:uppercase;color:var(--ink-soft);margin-bottom:9px;
+}
+.fact dd{font-size:16px;line-height:1.45}
+.fact dd b{font-weight:600}
+
+/* ---------- signature: contents strip ---------- */
+.strip{margin-top:64px}
+.strip-head{
+  display:flex;justify-content:space-between;align-items:baseline;
+  gap:20px;flex-wrap:wrap;
+  border-bottom:2px solid var(--ink);padding-bottom:10px;margin-bottom:0;
+}
+.strip-head h2{font-size:20px;font-weight:600;letter-spacing:-.01em}
+.strip-head p{
+  font-family:'JetBrains Mono',monospace;font-size:12px;color:var(--ink-soft);
+  letter-spacing:.06em;
+}
+.cats{list-style:none}
+.cat{
+  display:flex;gap:14px;align-items:baseline;
+  padding:13px 4px;border-bottom:1px solid var(--rule);
+  transition:color .14s ease;
+}
+.cat code{
+  font-family:'JetBrains Mono',monospace;font-size:13px;font-weight:500;
+  color:var(--signal);min-width:34px;
+}
+.cat span{font-size:15.5px;line-height:1.35}
+.cat b{font-weight:600}
+.cat .soon{color:var(--ink-soft);font-style:italic}
+.cat:hover{color:var(--signal)}
+
+/* ---------- diagram gallery ---------- */
+.gallery{
+  margin-top:20px;display:grid;gap:16px;
+  grid-template-columns:repeat(auto-fill,minmax(220px,1fr));
+}
+.tile{
+  display:flex;flex-direction:column;gap:10px;text-decoration:none;color:var(--ink);
+  background:var(--paper-lift);border:1px solid var(--rule);border-radius:4px;
+  padding:14px;transition:border-color .14s ease,transform .14s ease;
+}
+.tile:hover{border-color:var(--signal);transform:translateY(-2px)}
+.tile img{width:100%;height:140px;object-fit:contain;background:#fff;border:1px solid var(--rule);border-radius:2px}
+.tile span{font-size:13.5px;color:var(--ink-soft)}
+.tile-missing{align-items:center;justify-content:center;min-height:168px;cursor:default;opacity:.6}
+.tile-missing:hover{border-color:var(--rule);transform:none}
+.tile-missing .placeholder{text-align:center;font-size:13.5px;color:var(--ink-soft);line-height:1.5}
+.tagline-long{
+  font-style:italic;font-weight:700;font-size:13px;color:var(--ink-soft);
+  max-width:56ch;line-height:1.5;margin-top:6px;
+}
+
+/* ---------- footer ---------- */
+footer{
+  margin-top:70px;padding-top:26px;border-top:1px solid var(--rule);
+  display:flex;justify-content:space-between;gap:26px;flex-wrap:wrap;
+  font-size:14.5px;color:var(--ink-soft);
+}
+footer a{color:var(--ink);text-decoration:none;border-bottom:1px solid var(--rule)}
+footer a:hover{color:var(--signal);border-color:var(--signal)}
+
+/* ---------- entrance ---------- */
+@media (prefers-reduced-motion:no-preference){
+  .reveal{opacity:0;transform:translateY(10px);animation:rise .5s cubic-bezier(.2,.7,.3,1) forwards}
+  @keyframes rise{to{opacity:1;transform:none}}
+}
+</style>
+</head>
+
+<body>
+<div class="wrap">
+
+  <p class="eyebrow reveal" style="animation-delay:.05s">
+    K5 Framework <span>/</span> Case 01: Reading Direction
+  </p>
+
+  <h1 class="reveal" style="animation-delay:.1s">
+    Where a UML association <em>loses half its meaning</em>
+  </h1>
+
+  <p class="lede reveal" style="animation-delay:.16s">
+    Two diagrams. The same association, the same <code>xmi:id</code>, the same real Sparx
+    export. One reads <strong>true</strong>. The other reads <strong>false</strong>. Nothing
+    in the model itself says which is which &#8212; the marker that decides lives in the
+    diagram, not in the association, and does not survive the trip out of the tool.
+  </p>
+
+  <div class="actions reveal" style="animation-delay:.22s">
+    <a class="btn" id="open-model" href="#">Open the XMI export <span class="arrow">&#8594;</span></a>
+    <a class="btn-quiet" href="https://github.com/GevorgBaradat/k5-framework">Source and case files on GitHub</a>
+  </div>
+
+  <dl class="facts reveal" style="animation-delay:.28s">
+    <div class="fact">
+      <dt>What it costs the reader</dt>
+      <dd><b>Nothing.</b> A real export, not a hand-written fixture. Open it in anything that reads XML.</dd>
+    </div>
+    <div class="fact">
+      <dt>Who it is for</dt>
+      <dd>Anyone building a pipeline out of Sparx who wants to <b>see the gap</b> rather than take it on faith.</dd>
+    </div>
+    <div class="fact">
+      <dt>What comes back</dt>
+      <dd>A file you can run through <b>your own tooling</b> and compare against what is claimed here.</dd>
+    </div>
+  </dl>
+
+  <section class="strip reveal" style="animation-delay:.34s">
+    <div class="strip-head">
+      <h2>What is here</h2>
+      <p>Case 01 of the K5 series</p>
+    </div>
+    <ol class="cats">
+      <li class="cat"><code>01</code><span><b>XMI exports</b> &#8212; XMI 1.1 and 2.1, formatted and raw, straight out of Sparx</span></li>
+      <li class="cat"><code>02</code><span><b>Full write-up</b> &#8212; <span class="soon">publishing shortly</span></span></li>
+      <li class="cat"><code>03</code><span><b>Diagrams</b> &#8212; SVG and PNG, all six figures below</span></li>
+    </ol>
+  </section>
+
+  <section class="strip reveal" style="animation-delay:.4s">
+    <div class="strip-head">
+      <h2>The diagrams</h2>
+      <p>Tap a thumbnail to open the full SVG</p>
+    </div>
+    <div class="gallery">
+      <a class="tile" href="reading-direction/view-it-employment-v6.html">
+        <img src="reading-direction/IT_Employment_v6.png" alt="Figure 1 — IT_Employment_v6">
+        <span>Fig. 1 &#183; IT_Employment_v6</span>
+      </a>
+      <a class="tile" href="reading-direction/view-it-employment-v6-reverse.html">
+        <img src="reading-direction/IT_Employment_v6 reverse dir.png" alt="Figure 2 — reverse dir">
+        <span>Fig. 2 &#183; reverse dir</span>
+      </a>
+      <a class="tile" href="reading-direction/view-k5-uml-metamodel.html">
+        <img src="reading-direction/K5 UML Association Metamodel.png" alt="Figure 3 — K5 UML Association Metamodel">
+        <span>Fig. 3 &#183; K5 UML Association Metamodel</span>
+      </a>
+      <a class="tile" href="reading-direction/view-it-employment-metamodel.html">
+        <img src="reading-direction/IT_Employment_Metanodel.png" alt="Figure 4 — IT_Employment_Metamodel">
+        <span>Fig. 4 &#183; IT_Employment_Metamodel</span>
+      </a>
+      <a class="tile" href="reading-direction/view-k5-trace-map.html">
+        <img src="reading-direction/K5 Metamodel-to-Sparx-DB Trace Map (Navigation's Direction).png" alt="Figure 5 — Trace Map">
+        <span>Fig. 5 &#183; Metamodel-to-DB Trace Map</span>
+      </a>
+      <a class="tile" href="reading-direction/view-sparx-relational-realization.html">
+        <img src="reading-direction/Sparx Relational Realization of the Association.png" alt="Figure 6 — Sparx Relational Realization of the Association">
+        <span>Fig. 6 &#183; Sparx Relational Realization</span>
+      </a>
+    </div>
+  </section>
+
+  <footer class="reveal" style="animation-delay:.4s">
+    <div>
+      <p>Built and published by <a href="https://www.linkedin.com/in/yuriy-chernyavskiy/">Yuriy Chernyavskiy</a>,
+         AI-Native Business and Enterprise Architect.</p>
+      <p class="tagline-long">Building models that hold up twice over:<br>verifiable by domain experts, and<br>trustworthy as scaffolding for AI agents<br>to reason from without hallucinating.</p>
+    </div>
+    <p>Sparx Enterprise Architect is a product of <a href="https://sparxsystems.eu/">Sparx Systems Europe</a>. This is an independent research case, not a Sparx Systems product.</p>
+  </footer>
+
+</div>
+
+<script>
+/* ============================================================
+   THE ONLY LINE YOU MUST GET RIGHT.
+   Path to the primary file for this case, relative to this file.
+   Update this later to point at the article once it is published.
+   ============================================================ */
+var MODEL_ENTRY = "reading-direction/IT_Employment_v6_xmi_2_1.xml";
+
+var link = document.getElementById("open-model");
+link.setAttribute("href", MODEL_ENTRY);
+
+link.addEventListener("click", function () {
+  /* Counts how many visitors actually opened the export,
+     as opposed to landing here and leaving. */
+  if (window.goatcounter && window.goatcounter.count) {
+    window.goatcounter.count({
+      path: "opened-the-xmi",
+      title: "Opened the XMI export",
+      event: true
+    });
+  }
+});
+</script>
+</body>
+</html>
